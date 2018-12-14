@@ -10,7 +10,7 @@ VehicleInfo::~VehicleInfo()
 }
 
 // ----------------------------------------------------------------------------
-PhysVehicle3D::PhysVehicle3D(btRigidBody* body, btRaycastVehicle* vehicle, const VehicleInfo& info) : PhysBody3D(body), vehicle(vehicle), info(info)
+PhysVehicle3D::PhysVehicle3D(btRigidBody* body, btRaycastVehicle* vehicle, const VehicleInfo& info) : PhysBody3D(body,vec3(0,0,0)), vehicle(vehicle), info(info)
 {
 }
 

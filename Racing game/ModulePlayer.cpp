@@ -97,7 +97,7 @@ bool ModulePlayer::Start()
 	car.wheels[3].steering = false;
 
 	vehicle = App->physics->AddVehicle(car);
-	vehicle->SetPos(0, 12, 10);
+	vehicle->SetPos(0, 12, 0);
 	
 	return true;
 }
@@ -137,6 +137,19 @@ update_status ModulePlayer::Update(float dt)
 		brake = BRAKE_POWER;
 	}
 
+	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_REPEAT)
+	{
+	
+		//Set vehicle transform to 0
+		//float zero[16];
+		//for (int i = 0; i < 16; i++)
+		//{
+		//	zero[i] = 0;
+		//}
+		//vehicle->SetTransform(zero);
+		vehicle->SetPos(0, 12, 0);
+		//Set vehicle speed to 0
+	}
 	vehicle->ApplyEngineForce(acceleration);
 	vehicle->Turn(turn);
 	vehicle->Brake(brake);

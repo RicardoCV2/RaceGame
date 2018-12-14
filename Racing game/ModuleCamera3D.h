@@ -3,6 +3,9 @@
 #include "Globals.h"
 #include "glmath.h"
 
+class vec3;
+class btVector3;
+
 class ModuleCamera3D : public Module
 {
 public:
