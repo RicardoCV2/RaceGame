@@ -34,6 +34,7 @@ bool ModuleSceneIntro::Start()
 
 	s.size = vec3(20, 2, 100);
 	s.SetPos(0, 5, 80);
+	s.SetRotation(-30, vec3(1, 0, 0));
 	speedway.add(App->physics->AddBody(s, 0.0f));
 
 	return ret;

@@ -74,6 +74,12 @@ void PhysBody3D::SetPos(float x, float y, float z)
 	body->setWorldTransform(t);
 }
 
+void PhysBody3D::SetRotation(mat3x3 rotation)
+{
+	btTransform t = body->getWorldTransform();
+	body->setWorldTransform(t);
+}
+
 // ---------------------------------------------------------
 void PhysBody3D::SetAsSensor(bool is_sensor)
 {

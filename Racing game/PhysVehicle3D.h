@@ -47,6 +47,7 @@ public:
 
 	void Render();
 	void ApplyEngineForce(float force);
+	void Stop();
 	void Brake(float force);
 	void Turn(float degrees);
 	float GetKmh() const;
