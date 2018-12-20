@@ -103,20 +103,20 @@ update_status ModuleCamera3D::Update(float dt)
 	}
 
 	////Make camera follow player
-	else
-	{ 
-		vec3 player_pos = App->player->vehicle->GetPos();
+	//else
+	//{ 
+	//	vec3 player_pos = App->player->vehicle->GetPos();
 
-		//We know what position we want to get from the player frame
-		vec3 p_camera_pos(0, 10, -20);
-		mat3x3 rotation = App->player->vehicle->GetRotation();
-		//We need to put it in the world frame, so we need: Origin of the frame respect the world (player_pos) and Rotation matrix of the frame(rotation).
+	//	//We know what position we want to get from the player frame
+	//	vec3 p_camera_pos(0, 10, -20);
+	//	mat3x3 rotation = App->player->vehicle->GetRotation();
+	//	//We need to put it in the world frame, so we need: Origin of the frame respect the world (player_pos) and Rotation matrix of the frame(rotation).
 
-		//In order to fix the camera's height, we'd have to rotate only the x and z axis, and leave the y.
-		vec3 camera_pos = rotation*p_camera_pos + player_pos;
+	//	//In order to fix the camera's height, we'd have to rotate only the x and z axis, and leave the y.
+	//	vec3 camera_pos = rotation*p_camera_pos + player_pos;
 
-		Look(camera_pos, player_pos);
-	}
+	//	Look(camera_pos, player_pos);
+	//}
 	
 	return UPDATE_CONTINUE;
 }
