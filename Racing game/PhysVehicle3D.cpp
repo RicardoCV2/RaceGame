@@ -44,34 +44,12 @@ void PhysVehicle3D::Render()
 	btVector3 offset(info.chassis_offset.x, info.chassis_offset.y, info.chassis_offset.z);
 	offset = offset.rotate(q.getAxis(), q.getAngle());
 
-	Cube front(info.front_size.x, info.front_size.y, info.front_size.z);
-	vehicle->getChassisWorldTransform().getOpenGLMatrix(&front.transform);
-	btQuaternion q1 = vehicle->getChassisWorldTransform().getRotation();
-	btVector3 foffset(info.front_offset.x, info.front_offset.y, info.front_offset.z);
-	foffset = foffset.rotate(q1.getAxis(), q1.getAngle());
-
-	Cube pale(info.pale_size.x, info.pale_size.y, info.pale_size.z);
-	vehicle->getChassisWorldTransform().getOpenGLMatrix(&pale.transform);
-	btQuaternion q2 = vehicle->getChassisWorldTransform().getRotation();
-	btVector3 poffset(info.pale_offset.x, info.pale_offset.y, info.pale_offset.z);
-	poffset = poffset.rotate(q2.getAxis(), q2.getAngle());
-
 	chassis.transform.M[12] += offset.getX();
 	chassis.transform.M[13] += offset.getY();
 	chassis.transform.M[14] += offset.getZ();
 
-	front.transform.M[12] += foffset.getX();
-	front.transform.M[13] += foffset.getY();
-	front.transform.M[14] += foffset.getZ();
-
-	pale.transform.M[12] += poffset.getX();
-	pale.transform.M[13] += poffset.getY();
-	pale.transform.M[14] += poffset.getZ();
-
 
 	chassis.Render();
-	front.Render();
-	pale.Render();
 }
 
 // ----------------------------------------------------------------------------

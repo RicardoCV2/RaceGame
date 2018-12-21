@@ -55,16 +55,16 @@ bool ModulePhysics3D::Start()
 	world->setGravity(GRAVITY);
 	vehicle_raycaster = new btDefaultVehicleRaycaster(world);
 
-	// Big plane as ground
-	{
-		btCollisionShape* colShape = new btStaticPlaneShape(btVector3(0, 1, 0), 0);
+	//// Big plane as ground (Not necesary for the moment)
+	//{
+	//	btCollisionShape* colShape = new btStaticPlaneShape(btVector3(0, 1, 0), 0);
 
-		btDefaultMotionState* myMotionState = new btDefaultMotionState();
-		btRigidBody::btRigidBodyConstructionInfo rbInfo(0.0f, myMotionState, colShape);
+	//	btDefaultMotionState* myMotionState = new btDefaultMotionState();
+	//	btRigidBody::btRigidBodyConstructionInfo rbInfo(0.0f, myMotionState, colShape);
 
-		btRigidBody* body = new btRigidBody(rbInfo);
-		world->addRigidBody(body);
-	}
+	//	btRigidBody* body = new btRigidBody(rbInfo);
+	//	world->addRigidBody(body);
+	//}
 
 	return true;
 }
@@ -278,29 +278,12 @@ PhysVehicle3D* ModulePhysics3D::AddVehicle(const VehicleInfo& info)
 
 	btCollisionShape* colShape = new btBoxShape(btVector3(info.chassis_size.x*0.5f, info.chassis_size.y*0.5f, info.chassis_size.z*0.5f));
 	shapes.add(colShape);
-
-	btCollisionShape* FrontShape = new btBoxShape(btVector3(info.front_size.x*0.5f, info.front_size.y*0.5f, info.front_size.z*0.5f));
-	shapes.add(FrontShape);
-
-	btCollisionShape* PaleShape = new btBoxShape(btVector3(info.pale_size.x*0.5f, info.pale_size.y*0.5f, info.pale_size.z*0.5f));
-	shapes.add(PaleShape);
 	
 	btTransform trans;
 	trans.setIdentity();
 	trans.setOrigin(btVector3(info.chassis_offset.x, info.chassis_offset.y, info.chassis_offset.z));
 
-	btTransform front;
-	front.setIdentity();
-	front.setOrigin(btVector3(info.front_offset.x, info.front_offset.y, info.front_offset.z));
-
-	btTransform pale;
-	pale.setIdentity();
-	pale.setOrigin(btVector3(info.pale_offset.x, info.pale_offset.y, info.pale_offset.z));
-
-
 	comShape->addChildShape(trans, colShape);
-	comShape->addChildShape(front, FrontShape);
-	comShape->addChildShape(pale, PaleShape);
 
 	btTransform startTransform;
 	startTransform.setIdentity();
