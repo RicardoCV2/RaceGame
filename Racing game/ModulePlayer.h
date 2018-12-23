@@ -19,6 +19,11 @@ public:
 	update_status Update(float dt);
 	bool CleanUp();
 	void Player_reset();
+	vec3 World_to_Player(vec3, bool translate = true); //Given a vector in the world frame, this funtion returns it in the player frame
+	vec3 Player_to_World(vec3, bool translate = true); //Given a vector in the player frame, this funtion returns it in the world frame 
+
+	//Usefulll transformation functions
+	//vec3 btVector3_to_vec3(btVector3 vector); not working for unknown reason
 
 public:
 

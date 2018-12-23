@@ -117,7 +117,13 @@ update_status ModulePlayer::Update(float dt)
 
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 	{
-		acceleration = MAX_ACCELERATION;
+		vec3 velocity_respect_player = World_to_Player(vec3(vehicle->vehicle->getRigidBody()->getLinearVelocity().getX(), vehicle->vehicle->getRigidBody()->getLinearVelocity().getY(), vehicle->vehicle->getRigidBody()->getLinearVelocity().getZ()),false);
+		
+		if(velocity_respect_player.z > -1)
+			acceleration = MAX_ACCELERATION;
+		else
+			brake = BRAKE_POWER;
+
 	}
 
 	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
@@ -134,16 +140,32 @@ update_status ModulePlayer::Update(float dt)
 
 	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 	{
-		brake = BRAKE_POWER;
+		vec3 velocity_respect_player = World_to_Player(vec3(vehicle->vehicle->getRigidBody()->getLinearVelocity().getX(), vehicle->vehicle->getRigidBody()->getLinearVelocity().getY(), vehicle->vehicle->getRigidBody()->getLinearVelocity().getZ()),false);
+
+		if (velocity_respect_player.z < 1)
+			acceleration = -MAX_ACCELERATION;
+		else
+			brake = BRAKE_POWER;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_REPEAT)
 	{
-		Player_reset();
+		//Set vehicle transform to 0
+		float initial_transform[16];
+
+		for (int i = 0; i < 16; i++)
+		{
+			initial_transform[i] = 0;
+		}
+		initial_transform[0] = 1; initial_transform[5] = 1;	 initial_transform[10] = 1;
+		vehicle->SetTransform(initial_transform);
+		vehicle->SetPos(0, 12, 0);
+		//Set vehicle speed to 0
+		vehicle->Stop();
 	}
 
 	//Reset player if he falls from the circuit
-	if (vehicle->GetPos().y < -20)
+	if (vehicle->GetPos().y < -100)
 	{
 		Player_reset();
 	}
@@ -176,3 +198,42 @@ void ModulePlayer::Player_reset()
 	vehicle->Stop();
 }
 
+vec3 ModulePlayer::Player_to_World(vec3 vector_to_change, bool translate)
+{
+	vec3 player_pos = vehicle->GetPos();
+	mat3x3 rotation = vehicle->GetRotation();
+
+	////We need to put it in the world frame, so we need: Origin of the player respect the world (player_pos) and Rotation matrix of the player respect the world frame(rotation).
+	vec3 ret(0, 0, 0);
+	if (translate)
+		ret = rotation*vector_to_change + player_pos;
+	else
+		ret = rotation*vector_to_change;
+
+	return ret;
+
+}
+
+vec3 ModulePlayer::World_to_Player(vec3 vector_to_change, bool translate)
+{
+	vec3 player_pos = vehicle->GetPos();
+	mat3x3 rotation = vehicle->GetRotation();
+
+	////We need to put it in the player frame, so we need: Origin of the world respect the player (-player_pos) and Rotation matrix of the world frame respect the player(rotation').
+	rotation = App->physics->translate_3x3mat(rotation);
+	player_pos = -player_pos;
+
+	vec3 ret(0, 0, 0);
+	if (translate)
+		ret = rotation*vector_to_change + player_pos;
+	else
+		ret = rotation*vector_to_change;
+
+	return ret;
+
+}
+
+//vec3 ModulePlayer::btVector3_to_vec3(btVector3 vector)
+//{
+//	return vec3(vector.getX(), vector.getY(), vector.getZ());
+//}

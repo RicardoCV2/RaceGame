@@ -30,23 +30,38 @@ bool ModuleSceneIntro::Start()
 
 	p2List<SpeedwayPieceDef> speedway_pieces_def;
 
-	SpeedwayPieceDef piece1(vec3(10, 5, 100), vec3(0, 5, 40));
+	SpeedwayPieceDef piece1(vec3(10, 5, 100), vec3(0, 5, 40)); //Road
 	speedway_pieces_def.add(piece1);
 
-	SpeedwayPieceDef piece2(vec3(10, 5, 100), vec3(0, 5, 80), -20, vec3(1, 0, 0));
+	SpeedwayPieceDef piece2(vec3(10, 5, 100), vec3(0, 5, 80), -20, vec3(1, 0, 0)); //Road
 	speedway_pieces_def.add(piece2);
 
-	SpeedwayPieceDef piece3(vec3(10, 5, 50), vec3(0, 5, 195));
+	SpeedwayPieceDef piece3(vec3(10, 5, 50), vec3(0, 10, 195)); //Road
 	speedway_pieces_def.add(piece3);
 
-	SpeedwayPieceDef piece4(vec3(10, 5, 50), vec3(-20, 5, 230), -50, vec3 (0,1,0));
+	SpeedwayPieceDef piece4(vec3(10, 5, 50), vec3(-20, 5, 230), -50, vec3 (0,1,0)); //Road
 	speedway_pieces_def.add(piece4);
 
-	SpeedwayPieceDef piece5(vec3(10, 5, 100), vec3(-37, -10, 300), 10, vec3(1,0,0));
+	SpeedwayPieceDef piece5(vec3(10, 5, 100), vec3(-37, -10, 300), 10, vec3(1,0,0)); //Road
 	speedway_pieces_def.add(piece5);
 
-	SpeedwayPieceDef piece6(vec3(20, 5, 200), vec3(-37, -20, 450));
+	SpeedwayPieceDef piece6(vec3(20, 5, 300), vec3(-37, -40, 530)); //Road
 	speedway_pieces_def.add(piece6);
+
+	SpeedwayPieceDef piece7(vec3(10, 20, 20), vec3(-30, -40, 430)); //Obstacle
+	speedway_pieces_def.add(piece7);
+
+	SpeedwayPieceDef piece8(vec3(10, 20, 20), vec3(-45, -40, 430)); //Obstacle
+	speedway_pieces_def.add(piece8);
+
+	SpeedwayPieceDef piece9(vec3(10, 20, 20), vec3(-35, -40, 500)); //Obstacle
+	speedway_pieces_def.add(piece9);
+
+	SpeedwayPieceDef piece10(vec3(10, 20, 20), vec3(-40, -40, 540)); //Obstacle
+	speedway_pieces_def.add(piece10);
+
+	SpeedwayPieceDef piece11(vec3(10, 20, 20), vec3(-35, -40, 580)); //Obstacle
+	speedway_pieces_def.add(piece11);
 
 	for (int i = 0; i < speedway_pieces_def.count(); i++)
 	{
