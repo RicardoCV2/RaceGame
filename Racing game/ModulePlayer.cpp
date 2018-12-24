@@ -113,6 +113,7 @@ bool ModulePlayer::CleanUp()
 // Update: draw background
 update_status ModulePlayer::Update(float dt)
 {
+	z = vehicle->GetPos().z;
 	turn = acceleration = brake = 0.0f;
 
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
@@ -177,7 +178,8 @@ update_status ModulePlayer::Update(float dt)
 
 	char title[80];
 	sprintf_s(title, "%.1f Km/h", vehicle->GetKmh());
-	App->window->SetTitle(title);
+	if (App->scene_intro->start)
+		App->window->SetTitle(title);
 
 	return UPDATE_CONTINUE;
 }

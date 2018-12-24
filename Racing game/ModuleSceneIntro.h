@@ -45,6 +45,10 @@ public:
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 
 public:
+	bool start = false;
 	p2List<PhysBody3D*> speedway;
-	//PhysBody3D* sensor;
+	PhysBody3D* Sstart;
+	PhysBody3D* Sfinish;
+	Cube startcube;
+	Cube finishcube;
 };

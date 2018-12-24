@@ -3,6 +3,7 @@
 #include "ModuleSceneIntro.h"
 #include "Primitive.h"
 #include "PhysBody3D.h"
+#include "ModulePlayer.h"
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -17,16 +18,17 @@ bool ModuleSceneIntro::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
-	//We don't need sensors yet, morover this code is dirty
+	startcube.size = vec3(20, 10, 2);
+	startcube.SetPos(0, 10, 8);
+	finishcube.size = vec3(20, 10, 2);
+	finishcube.SetPos(-40, -30, 665);
 
-	//s.size = vec3(5, 3, 1);
-	//s.SetPos(0, 2.5f, 20);
-
-	//sensor = App->physics->AddBody(s, 0.0f);
-	//sensor->SetAsSensor(true);
-	//sensor->collision_listeners.add(this);
-
-	
+	Sstart = App->physics->AddBody(startcube, 0.0f);
+	Sstart->SetAsSensor(true);
+	Sstart->collision_listeners.add(this);
+	Sfinish = App->physics->AddBody(finishcube, 0.0f);
+	Sfinish->SetAsSensor(true);
+	Sfinish->collision_listeners.add(this);
 
 	p2List<SpeedwayPieceDef> speedway_pieces_def;
 
@@ -92,14 +94,18 @@ bool ModuleSceneIntro::CleanUp()
 // Update
 update_status ModuleSceneIntro::Update(float dt)
 {
-	//We don't need sensors nor planes yet, morover this code is dirty
+	Sstart->GetTransform(&startcube.transform);
+	Sfinish->GetTransform(&finishcube.transform);
+	if (Sstart->GetPos().z <= App->player->z)
+		start = true;
+	else
+		start = false;
+	if (Sfinish->GetPos().z <= App->player->z)
+		App->player->Player_reset();
 
-	//sensor->GetTransform(&s.transform);
-	//s.Render();
-
-	//Plane p(0, 1, 0, 0);
-	//p.axis = true;
-	//p.Render();
+	Plane p(0, 1, 0, 0);
+	p.axis = true;
+	p.Render();
 
 	//Blit all 
 	for (int i = 0; i < speedway.count(); i++)
