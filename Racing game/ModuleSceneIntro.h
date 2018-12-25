@@ -45,10 +45,16 @@ public:
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 
 public:
-	bool start = false;
+
 	p2List<PhysBody3D*> speedway;
 	PhysBody3D* Sstart;
 	PhysBody3D* Sfinish;
 	Cube startcube;
 	Cube finishcube;
+	int laps = 0;
+	float last_lap_time = 0;
+	float best_lap_time = 0;
+	float current_lap_time = 0;
+	Timer lap_timer;
+	bool started = false;
 };

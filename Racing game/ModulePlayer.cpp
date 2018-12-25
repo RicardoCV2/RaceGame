@@ -176,9 +176,9 @@ update_status ModulePlayer::Update(float dt)
 
 	vehicle->Render();
 
-	char title[80];
-	sprintf_s(title, "%.1f Km/h", vehicle->GetKmh());
-	if (App->scene_intro->start)
+		char title[150];
+		sprintf_s(title, "Speed: %.1f Km/h | Laps: %d | Current lap time %.2f | Last lap time: %.2f | Best lap time: %.2f", vehicle->GetKmh(),
+			App->scene_intro->laps, App->scene_intro->current_lap_time, App->scene_intro->last_lap_time, App->scene_intro->best_lap_time);
 		App->window->SetTitle(title);
 
 	return UPDATE_CONTINUE;
@@ -198,6 +198,7 @@ void ModulePlayer::Player_reset()
 	vehicle->SetPos(0, 12, 0);
 	//Set vehicle speed to 0
 	vehicle->Stop();
+	App->scene_intro->started = false;
 }
 
 vec3 ModulePlayer::Player_to_World(vec3 vector_to_change, bool translate)

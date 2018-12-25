@@ -94,14 +94,28 @@ bool ModuleSceneIntro::CleanUp()
 // Update
 update_status ModuleSceneIntro::Update(float dt)
 {
-	Sstart->GetTransform(&startcube.transform);
-	Sfinish->GetTransform(&finishcube.transform);
-	if (Sstart->GetPos().z <= App->player->z)
-		start = true;
-	else
-		start = false;
+	current_lap_time = (float)lap_timer.Read() / 1000;
+	if (Sstart->GetPos().z <= App->player->z && !started)
+	{
+		lap_timer.Start();
+		started = true;
+	}
+	if (Sstart->GetPos().z >= App->player->z)
+	{
+		lap_timer.Reset();
+		started = false;
+	}
+
 	if (Sfinish->GetPos().z <= App->player->z)
+	{
 		App->player->Player_reset();
+		last_lap_time = (float)lap_timer.Read() / 1000;
+		if (best_lap_time == 0 || last_lap_time < best_lap_time)
+			best_lap_time = last_lap_time;
+		laps++;
+		started = false;
+		lap_timer.Reset();
+	}
 
 	Plane p(0, 1, 0, 0);
 	p.axis = true;
