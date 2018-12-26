@@ -30,7 +30,8 @@ public:
 	
 	Color color;
 	mat4x4 transform;
-	bool axis,wire;
+	bool axis = false;
+	bool wire;
 
 protected:
 	PrimitiveTypes type;

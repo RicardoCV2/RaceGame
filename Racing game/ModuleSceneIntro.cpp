@@ -117,10 +117,6 @@ update_status ModuleSceneIntro::Update(float dt)
 		lap_timer.Reset();
 	}
 
-	Plane p(0, 1, 0, 0);
-	p.axis = true;
-	p.Render();
-
 	//Blit all 
 	for (int i = 0; i < speedway.count(); i++)
 	{
