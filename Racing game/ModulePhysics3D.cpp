@@ -55,16 +55,7 @@ bool ModulePhysics3D::Start()
 	world->setGravity(GRAVITY);
 	vehicle_raycaster = new btDefaultVehicleRaycaster(world);
 
-	//// Big plane as ground (Not necesary for the moment)
-	//{
-	//	btCollisionShape* colShape = new btStaticPlaneShape(btVector3(0, 1, 0), 0);
-
-	//	btDefaultMotionState* myMotionState = new btDefaultMotionState();
-	//	btRigidBody::btRigidBodyConstructionInfo rbInfo(0.0f, myMotionState, colShape);
-
-	//	btRigidBody* body = new btRigidBody(rbInfo);
-	//	world->addRigidBody(body);
-	//}
+	
 
 	return true;
 }

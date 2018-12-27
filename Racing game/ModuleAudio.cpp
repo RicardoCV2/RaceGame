@@ -41,6 +41,11 @@ bool ModuleAudio::Init()
 		ret = true;
 	}
 
+	
+	LoadFx("Audio/Starting.wav");
+	LoadFx("Audio/Motor.wav");
+	LoadFx("Audio/Breaks.wav");
+
 	return ret;
 }
 
@@ -140,7 +145,7 @@ unsigned int ModuleAudio::LoadFx(const char* path)
 }
 
 // Play WAV
-bool ModuleAudio::PlayFx(unsigned int id, int repeat)
+bool ModuleAudio::PlayFx(unsigned int id, int repeat, int channel)
 {
 	bool ret = false;
 
@@ -148,7 +153,7 @@ bool ModuleAudio::PlayFx(unsigned int id, int repeat)
 	
 	if(fx.at(id-1, chunk) == true)
 	{
-		Mix_PlayChannel(-1, chunk, repeat);
+		Mix_PlayChannel(channel, chunk, repeat);
 		ret = true;
 	}
 

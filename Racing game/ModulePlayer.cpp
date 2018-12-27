@@ -4,6 +4,7 @@
 #include "Primitive.h"
 #include "PhysVehicle3D.h"
 #include "PhysBody3D.h"
+#include "ModuleAudio.h"
 
 ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, start_enabled), vehicle(NULL)
 {
@@ -116,6 +117,11 @@ update_status ModulePlayer::Update(float dt)
 	z = vehicle->GetPos().z;
 	turn = acceleration = brake = 0.0f;
 
+	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
+	{
+		App->audio->PlayFx(1);
+	}
+
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 	{
 		vec3 velocity_respect_player = World_to_Player(vec3(vehicle->vehicle->getRigidBody()->getLinearVelocity().getX(), vehicle->vehicle->getRigidBody()->getLinearVelocity().getY(), vehicle->vehicle->getRigidBody()->getLinearVelocity().getZ()),false);
@@ -125,6 +131,10 @@ update_status ModulePlayer::Update(float dt)
 		else
 			brake = BRAKE_POWER;
 
+		Mix_Resume(1);
+		if (!driving)
+			App->audio->PlayFx(2, 0, 1);
+		driving = true;
 	}
 
 	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
@@ -147,6 +157,21 @@ update_status ModulePlayer::Update(float dt)
 			acceleration = -MAX_ACCELERATION;
 		else
 			brake = BRAKE_POWER;
+
+		Mix_Resume(1);
+		if (!driving)
+			App->audio->PlayFx(2, 0, 1);
+		driving = true;
+	}
+
+	if ((App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN
+		|| App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN) && vehicle->GetKmh() > 70)
+		App->audio->PlayFx(3);
+
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) != KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_UP) != KEY_REPEAT)
+	{
+		driving = false;
+		Mix_Pause(1);
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_REPEAT)
@@ -177,7 +202,7 @@ update_status ModulePlayer::Update(float dt)
 	vehicle->Render();
 
 		char title[150];
-		sprintf_s(title, "Speed: %.1f Km/h | Laps: %d | Current lap time %.2f | Last lap time: %.2f | Best lap time: %.2f", vehicle->GetKmh(),
+		sprintf_s(title, "Speed: %.1f Km/h | Laps: %d | Current lap time %.2fs | Last lap time: %.2fs | Best lap time: %.2fs", vehicle->GetKmh(),
 			App->scene_intro->laps, App->scene_intro->current_lap_time, App->scene_intro->last_lap_time, App->scene_intro->best_lap_time);
 		App->window->SetTitle(title);
 

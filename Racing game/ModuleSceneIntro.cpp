@@ -15,6 +15,7 @@ ModuleSceneIntro::~ModuleSceneIntro()
 // Load assets
 bool ModuleSceneIntro::Start()
 {
+	App->audio->PlayMusic("Audio/Song.ogg");
 	LOG("Loading Intro assets");
 	bool ret = true;
 
