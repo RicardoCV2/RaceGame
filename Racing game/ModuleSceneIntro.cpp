@@ -68,17 +68,44 @@ bool ModuleSceneIntro::Start()
 
 	for (int i = 0; i < speedway_pieces_def.count(); i++)
 	{
-		Cube s;
+		Cube c;
 		SpeedwayPieceDef piece_def;
 		speedway_pieces_def.at(i, piece_def);
 
-		s.size = piece_def.size;
-		s.SetPos(piece_def.position.x, piece_def.position.y, piece_def.position.z);
+		c.size = piece_def.size;
+		c.SetPos(piece_def.position.x, piece_def.position.y, piece_def.position.z);
 		if (piece_def.angle != 0)
 		{ 
-			s.SetRotation(piece_def.angle, piece_def.rotation_axis);
+			c.SetRotation(piece_def.angle, piece_def.rotation_axis);
 		}
-		speedway.add(App->physics->AddBody(s, 0.0f));
+		speedway.add(App->physics->AddBody(c, 0.0f));
+	}
+
+	p2List<ObstacleDef> obstacles_def;
+
+	ObstacleDef obstacle1(vec3(0, 30, 170));
+	obstacles_def.add(obstacle1);
+
+	for (int i = 0; i <= obstacles_def.count(); i++)
+	{
+		Cube c;
+		ObstacleDef obstacle_def;
+		obstacles_def.at(i, obstacle_def);
+		c.size = vec3(5, 5, 5);
+		c.SetPos(obstacle_def.position.x, obstacle_def.position.y, obstacle_def.position.z);
+		hammers_axis.add(App->physics->AddBody(c, 0.0f));
+
+		c.size = vec3(20, 5, 5);
+		hammers.add(App->physics->AddBody(c, 50.0f));
+	}
+
+	for (int i = 0; i <= hammers.count(); i++)
+	{
+		PhysBody3D* bodyA;
+		PhysBody3D* bodyB;
+		hammers_axis.at(i, bodyA);
+		hammers.at(i, bodyB);
+		App->physics->AddConstraintHinge(*bodyA, *bodyB, vec3(0, 0, 0), (0, 0, 0), (1, 1, 1), (1, 80, 1), true);
 	}
 
 	return ret;
@@ -96,34 +123,39 @@ bool ModuleSceneIntro::CleanUp()
 update_status ModuleSceneIntro::Update(float dt)
 {
 	current_lap_time = (float)lap_timer.Read() / 1000;
-	if (Sstart->GetPos().z <= App->player->z && !started)
-	{
-		lap_timer.Start();
-		started = true;
-	}
+
 	if (Sstart->GetPos().z >= App->player->z)
 	{
 		lap_timer.Reset();
 		started = false;
 	}
 
-	if (Sfinish->GetPos().z <= App->player->z)
-	{
-		App->player->Player_reset();
-		last_lap_time = (float)lap_timer.Read() / 1000;
-		if (best_lap_time == 0 || last_lap_time < best_lap_time)
-			best_lap_time = last_lap_time;
-		laps++;
-		started = false;
-		lap_timer.Reset();
-	}
-
-	//Blit all 
+	//Blit everything
 	for (int i = 0; i < speedway.count(); i++)
 	{
 		Cube runder;
 		PhysBody3D* body;
 		speedway.at(i, body);
+		body->GetTransform(&runder.transform);
+		runder.size = body->size;
+		runder.Render();
+	}
+
+	for (int i = 0; i < hammers_axis.count(); i++)
+	{
+		Cube runder;
+		PhysBody3D* body;
+		hammers_axis.at(i, body);
+		body->GetTransform(&runder.transform);
+		runder.size = body->size;
+		runder.Render();
+	}
+
+	for (int i = 0; i < hammers.count(); i++)
+	{
+		Cube runder;
+		PhysBody3D* body;
+		hammers.at(i, body);
 		body->GetTransform(&runder.transform);
 		runder.size = body->size;
 		runder.Render();
@@ -135,5 +167,20 @@ update_status ModuleSceneIntro::Update(float dt)
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
 	LOG("Hit!");
+	if (body1 == Sstart)
+	{
+		lap_timer.Start();
+		started = true;
+	}
+	else if (body1 == Sfinish)
+	{
+		App->player->Player_reset();
+		last_lap_time = (float)lap_timer.Read() / 1000;
+		if (best_lap_time == 0 || last_lap_time < best_lap_time)
+			best_lap_time = last_lap_time;
+		laps++;
+		started = false;
+		lap_timer.Reset();
+	}
 }
 

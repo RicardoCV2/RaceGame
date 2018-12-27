@@ -32,6 +32,20 @@ struct SpeedwayPieceDef
 	int angle;
 	vec3 rotation_axis;
 };
+struct ObstacleDef
+{
+	ObstacleDef()
+	{
+		position = vec3(0, 0, 0);
+	}
+
+	ObstacleDef(vec3 _position)
+	{
+		position = _position;
+	}
+
+	vec3 position;
+};
 class ModuleSceneIntro : public Module
 {
 public:
@@ -47,6 +61,9 @@ public:
 public:
 
 	p2List<PhysBody3D*> speedway;
+	p2List<PhysBody3D*> hammers_axis;
+	p2List<PhysBody3D*> hammers;
+	PhysBody3D* Hammer;
 	PhysBody3D* Sstart;
 	PhysBody3D* Sfinish;
 	Cube startcube;
