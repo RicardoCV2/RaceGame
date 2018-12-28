@@ -22,11 +22,21 @@ bool ModulePlayer::Start()
 	VehicleInfo car;
 
 	// Car properties ----------------------------------------
-	car.chassis_size.Set(2, 2, 8);
-	car.chassis_offset.Set(0, 1.5, 0);
+	car.chassis_size.Set(2, 1, 5);
+	car.chassis_offset.Set(0, 1, 0);
+
+	car.top_size.Set(2, 1, 2);
+	car.top_offset.Set(0, 2, -0.5);
+
+	car.llight_size.Set(0.3f, 0.3f, 0.3f);
+	car.llight_offset.Set(0.7, 1.2, -2.5);
+
+	car.rlight_size.Set(0.3f, 0.3f, 0.3f);
+	car.rlight_offset.Set(-0.7, 1.2, -2.5);
+
 	car.mass = 500.0f;
-	car.suspensionStiffness = 15.88f;
-	car.suspensionCompression = 0.83f;
+	car.suspensionStiffness = 8.88f;
+	car.suspensionCompression = 5.0f;
 	car.suspensionDamping = 0.88f;
 	car.maxSuspensionTravelCm = 1000.0f;
 	car.frictionSlip = 50.5;
@@ -121,6 +131,8 @@ update_status ModulePlayer::Update(float dt)
 	{
 		App->audio->PlayFx(1);
 	}
+	
+	
 
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 	{

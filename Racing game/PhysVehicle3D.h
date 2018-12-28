@@ -4,6 +4,7 @@
 #include "glmath.h"
 
 class btRaycastVehicle;
+class Cube;
 struct PhysBody3D;
 
 struct Wheel
@@ -26,6 +27,18 @@ struct VehicleInfo
 	
 	vec3 chassis_size;
 	vec3 chassis_offset;
+
+	vec3 top_size;
+	vec3 top_offset;
+
+	vec3 llight_size;
+	vec3 llight_offset;
+
+	vec3 rlight_size;
+	vec3 rlight_offset;
+
+	
+
 	float mass;
 	float suspensionStiffness; // default to 5.88 / 10.0 offroad / 50.0 sports car / 200.0 F1 car
 	float suspensionCompression; // default to 0.83
@@ -52,7 +65,7 @@ public:
 	void Turn(float degrees);
 	float GetKmh() const;
 public:
-
+	
 	VehicleInfo info;
 	btRaycastVehicle* vehicle;
 };
