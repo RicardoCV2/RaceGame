@@ -38,6 +38,12 @@ struct VehicleInfo
 	vec3 rlight_size;
 	vec3 rlight_offset;
 
+	vec3 top_rlight_size;
+	vec3 top_rlight_offset;
+
+	vec3 top_llight_size;
+	vec3 top_llight_offset;
+
 	
 
 	float mass;

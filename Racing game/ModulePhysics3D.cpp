@@ -287,6 +287,12 @@ PhysVehicle3D* ModulePhysics3D::AddVehicle(const VehicleInfo& info)
 
 	btCollisionShape* rlightShape = new btBoxShape(btVector3(info.rlight_size.x*0.5f, info.rlight_size.y*0.5f, info.rlight_size.z*0.5f));
 	shapes.add(rlightShape);
+
+	btCollisionShape* top_rlightShape = new btBoxShape(btVector3(info.top_rlight_size.x*0.5f, info.top_rlight_size.y*0.5f, info.top_rlight_size.z*0.5f));
+	shapes.add(top_rlightShape);
+
+	btCollisionShape* top_llightShape = new btBoxShape(btVector3(info.top_llight_size.x*0.5f, info.top_llight_size.y*0.5f, info.top_llight_size.z*0.5f));
+	shapes.add(top_llightShape);
 	
 	btTransform trans;
 	trans.setIdentity();
@@ -304,10 +310,20 @@ PhysVehicle3D* ModulePhysics3D::AddVehicle(const VehicleInfo& info)
 	rlight.setIdentity();
 	rlight.setOrigin(btVector3(info.rlight_offset.x, info.rlight_offset.y, info.rlight_offset.z));
 
+	btTransform top_rlight;
+	top_rlight.setIdentity();
+	top_rlight.setOrigin(btVector3(info.top_rlight_offset.x, info.top_rlight_offset.y, info.top_rlight_offset.z));
+
+	btTransform top_llight;
+	top_llight.setIdentity();
+	top_llight.setOrigin(btVector3(info.top_llight_offset.x, info.top_llight_offset.y, info.top_llight_offset.z));
+
 	comShape->addChildShape(trans, colShape);
 	comShape->addChildShape(top, topShape);
 	comShape->addChildShape(llight, llightShape);
 	comShape->addChildShape(rlight, rlightShape);
+	comShape->addChildShape(top_rlight, top_rlightShape);
+	comShape->addChildShape(top_llight, top_llightShape);
 
 	btTransform startTransform;
 	startTransform.setIdentity();

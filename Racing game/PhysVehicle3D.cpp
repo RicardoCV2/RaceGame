@@ -67,6 +67,19 @@ void PhysVehicle3D::Render()
 	btVector3 rloffset(info.rlight_offset.x, info.rlight_offset.y, info.rlight_offset.z);
 	rloffset = rloffset.rotate(q3.getAxis(), q3.getAngle());
 	
+	Cube top_rlight(info.top_rlight_size.x, info.top_rlight_size.y, info.top_rlight_size.z);
+	top_rlight.color.Set(1.0f, 1.0f, 0.0f, 1);
+	vehicle->getChassisWorldTransform().getOpenGLMatrix(&top_rlight.transform);
+	btQuaternion q4 = vehicle->getChassisWorldTransform().getRotation();
+	btVector3 top_rloffset(info.top_rlight_offset.x, info.top_rlight_offset.y, info.top_rlight_offset.z);
+	top_rloffset = top_rloffset.rotate(q4.getAxis(), q4.getAngle());
+
+	Cube top_llight(info.top_llight_size.x, info.top_llight_size.y, info.top_llight_size.z);
+	top_llight.color.Set(1.0f, 1.0f, 0.0f, 1);
+	vehicle->getChassisWorldTransform().getOpenGLMatrix(&top_llight.transform);
+	btQuaternion q5 = vehicle->getChassisWorldTransform().getRotation();
+	btVector3 top_lloffset(info.top_llight_offset.x, info.top_llight_offset.y, info.top_llight_offset.z);
+	top_lloffset = top_lloffset.rotate(q5.getAxis(), q5.getAngle());
 	
 	
 
@@ -86,11 +99,21 @@ void PhysVehicle3D::Render()
 	rlight.transform.M[13] += rloffset.getY();
 	rlight.transform.M[14] += rloffset.getZ();
 
+	top_rlight.transform.M[12] += top_rloffset.getX();
+	top_rlight.transform.M[13] += top_rloffset.getY();
+	top_rlight.transform.M[14] += top_rloffset.getZ();
+	
+	top_llight.transform.M[12] += top_lloffset.getX();
+	top_llight.transform.M[13] += top_lloffset.getY();
+	top_llight.transform.M[14] += top_lloffset.getZ();
+
 
 	chassis.Render();
 	top.Render();
 	llight.Render();
 	rlight.Render();
+	top_rlight.Render();
+	top_llight.Render();
 	
 }
 

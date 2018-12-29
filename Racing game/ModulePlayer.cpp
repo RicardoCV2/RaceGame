@@ -34,6 +34,12 @@ bool ModulePlayer::Start()
 	car.rlight_size.Set(0.3f, 0.3f, 0.3f);
 	car.rlight_offset.Set(-0.7, 1.2, -2.5);
 
+	car.top_rlight_size.Set(0.3f, 0.3f, 0.3f);
+	car.top_rlight_offset.Set(-0.7, 1.2, 2.5);
+
+	car.top_llight_size.Set(0.3f, 0.3f, 0.3f);
+	car.top_llight_offset.Set(0.7, 1.2, 2.5);
+
 	car.mass = 500.0f;
 	car.suspensionStiffness = 8.88f;
 	car.suspensionCompression = 5.0f;
