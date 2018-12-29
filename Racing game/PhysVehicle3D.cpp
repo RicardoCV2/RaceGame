@@ -53,15 +53,13 @@ void PhysVehicle3D::Render()
 	btVector3 toffset(info.top_offset.x, info.top_offset.y, info.top_offset.z);
 	toffset = toffset.rotate(q1.getAxis(), q1.getAngle());
 
-	Cube llight(info.llight_size.x, info.llight_size.y, info.llight_size.z);
-	llight.color.Set(1.0f, 0.0f, 0.0f, 1);
+	llight.size = { info.llight_size.x, info.llight_size.y, info.llight_size.z };
 	vehicle->getChassisWorldTransform().getOpenGLMatrix(&llight.transform);
 	btQuaternion q2 = vehicle->getChassisWorldTransform().getRotation();
 	btVector3 lloffset(info.llight_offset.x, info.llight_offset.y, info.llight_offset.z);
 	lloffset = lloffset.rotate(q2.getAxis(), q2.getAngle());
 
-	Cube rlight(info.rlight_size.x, info.rlight_size.y, info.rlight_size.z);
-	rlight.color.Set(1.0f, 0.0f, 0.0f, 1);
+	rlight.size = { info.rlight_size.x, info.rlight_size.y, info.rlight_size.z };
 	vehicle->getChassisWorldTransform().getOpenGLMatrix(&rlight.transform);
 	btQuaternion q3 = vehicle->getChassisWorldTransform().getRotation();
 	btVector3 rloffset(info.rlight_offset.x, info.rlight_offset.y, info.rlight_offset.z);
@@ -80,8 +78,26 @@ void PhysVehicle3D::Render()
 	btQuaternion q5 = vehicle->getChassisWorldTransform().getRotation();
 	btVector3 top_lloffset(info.top_llight_offset.x, info.top_llight_offset.y, info.top_llight_offset.z);
 	top_lloffset = top_lloffset.rotate(q5.getAxis(), q5.getAngle());
-	
-	
+
+	break_light.size = { info.break_light_size.x, info.break_light_size.y, info.break_light_size.z };
+	vehicle->getChassisWorldTransform().getOpenGLMatrix(&break_light.transform);
+	btQuaternion q6 = vehicle->getChassisWorldTransform().getRotation();
+	btVector3 bloffset(info.break_light_offset.x, info.break_light_offset.y, info.break_light_offset.z);
+	bloffset = bloffset.rotate(q6.getAxis(), q6.getAngle());
+
+
+	if (aux_light == false)
+	{
+		llight.color.Set(1.0f, 0.0f, 0.0f, 1);
+		rlight.color.Set(1.0f, 0.0f, 0.0f, 1);
+		break_light.color.Set(1.0f, 0.5f, 0.0f, 1);
+	}
+	else
+	{
+		llight.color.Set(1.0f, 1.0f, 1.0f, 1);
+		rlight.color.Set(1.0f, 1.0f, 1.0f, 1);
+		break_light.color.Set(1.0f, 0.0f, 0.0f, 1);
+	}
 
 	chassis.transform.M[12] += offset.getX();
 	chassis.transform.M[13] += offset.getY();
@@ -107,6 +123,10 @@ void PhysVehicle3D::Render()
 	top_llight.transform.M[13] += top_lloffset.getY();
 	top_llight.transform.M[14] += top_lloffset.getZ();
 
+	break_light.transform.M[12] += bloffset.getX();
+	break_light.transform.M[13] += bloffset.getY();
+	break_light.transform.M[14] += bloffset.getZ();
+
 
 	chassis.Render();
 	top.Render();
@@ -114,6 +134,7 @@ void PhysVehicle3D::Render()
 	rlight.Render();
 	top_rlight.Render();
 	top_llight.Render();
+	break_light.Render();
 	
 }
 

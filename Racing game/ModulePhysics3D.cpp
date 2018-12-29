@@ -293,6 +293,9 @@ PhysVehicle3D* ModulePhysics3D::AddVehicle(const VehicleInfo& info)
 
 	btCollisionShape* top_llightShape = new btBoxShape(btVector3(info.top_llight_size.x*0.5f, info.top_llight_size.y*0.5f, info.top_llight_size.z*0.5f));
 	shapes.add(top_llightShape);
+
+	btCollisionShape* break_lightShape = new btBoxShape(btVector3(info.break_light_size.x*0.5f, info.break_light_size.y*0.5f, info.break_light_size.z*0.5f));
+	shapes.add(break_lightShape);
 	
 	btTransform trans;
 	trans.setIdentity();
@@ -318,12 +321,17 @@ PhysVehicle3D* ModulePhysics3D::AddVehicle(const VehicleInfo& info)
 	top_llight.setIdentity();
 	top_llight.setOrigin(btVector3(info.top_llight_offset.x, info.top_llight_offset.y, info.top_llight_offset.z));
 
+	btTransform break_light;
+	break_light.setIdentity();
+	break_light.setOrigin(btVector3(info.break_light_offset.x, info.break_light_offset.y, info.break_light_offset.z));
+
 	comShape->addChildShape(trans, colShape);
 	comShape->addChildShape(top, topShape);
 	comShape->addChildShape(llight, llightShape);
 	comShape->addChildShape(rlight, rlightShape);
 	comShape->addChildShape(top_rlight, top_rlightShape);
 	comShape->addChildShape(top_llight, top_llightShape);
+	comShape->addChildShape(break_light, break_lightShape);
 
 	btTransform startTransform;
 	startTransform.setIdentity();

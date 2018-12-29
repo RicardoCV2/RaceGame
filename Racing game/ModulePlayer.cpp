@@ -40,6 +40,9 @@ bool ModulePlayer::Start()
 	car.top_llight_size.Set(0.3f, 0.3f, 0.3f);
 	car.top_llight_offset.Set(0.7, 1.2, 2.5);
 
+	car.break_light_size.Set(1.0f, 0.1f, 0.1f);
+	car.break_light_offset.Set(0, 2.2, -1.5);
+
 	car.mass = 500.0f;
 	car.suspensionStiffness = 8.88f;
 	car.suspensionCompression = 5.0f;
@@ -139,6 +142,7 @@ update_status ModulePlayer::Update(float dt)
 		App->audio->PlayFx(1);
 	}
 
+
 	if (App->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN)
 		App->audio->SetVolume(MIX_MAX_VOLUME / 16);
 
@@ -191,8 +195,15 @@ update_status ModulePlayer::Update(float dt)
 		if (!driving)
 			App->audio->PlayFx(2, 0, 1);
 		driving = true;
-	}
 
+	
+		vehicle->aux_light = true;
+		
+	}
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_UP)
+	{
+		vehicle->aux_light = false;
+	}
 	if ((App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN
 		|| App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN) && vehicle->GetKmh() > 70)
 		App->audio->PlayFx(3);

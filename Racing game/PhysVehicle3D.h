@@ -44,6 +44,10 @@ struct VehicleInfo
 	vec3 top_llight_size;
 	vec3 top_llight_offset;
 
+	vec3 break_light_size;
+	vec3 break_light_offset;
+
+
 	
 
 	float mass;
@@ -72,7 +76,10 @@ public:
 	void Turn(float degrees);
 	float GetKmh() const;
 public:
-	
+	bool aux_light = false;
+	Cube llight;
+	Cube rlight;
+	Cube break_light;
 	VehicleInfo info;
 	btRaycastVehicle* vehicle;
 };
