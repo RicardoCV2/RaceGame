@@ -22,11 +22,19 @@ public:
 	// Load a WAV in memory
 	unsigned int LoadFx(const char* path);
 
+	// Set music volume
+	void SetVolume(float volume);
+
+	// Set FX volume
+	void SetFxVolume(float volume);
+
 	// Play a previously loaded WAV
 	bool PlayFx(unsigned int fx, int repeat = 0, int channel = -1);
 
 private:
-
+	float final_volume = MIX_MAX_VOLUME;
+	float final_fx_volume = MIX_MAX_VOLUME;
+	float last_volume = 0.0f;
 	Mix_Music*			music;
 	p2List<Mix_Chunk*>	fx;
 };

@@ -2,6 +2,7 @@
 
 #include "PhysBody3D.h"
 #include "glmath.h"
+#include "Primitive.h"
 
 class btRaycastVehicle;
 class Cube;

@@ -110,6 +110,7 @@ bool ModulePlayer::Start()
 	vehicle = App->physics->AddVehicle(car);
 	vehicle->SetPos(0, 12, 0);
 	
+
 	return true;
 }
 
@@ -131,8 +132,18 @@ update_status ModulePlayer::Update(float dt)
 	{
 		App->audio->PlayFx(1);
 	}
-	
-	
+
+	if (App->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN)
+		App->audio->SetVolume(MIX_MAX_VOLUME / 16);
+
+	if (App->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_DOWN)
+		App->audio->SetVolume(-(MIX_MAX_VOLUME / 16));
+
+	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
+		App->audio->SetFxVolume(MIX_MAX_VOLUME / 16);
+
+	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
+		App->audio->SetFxVolume(-(MIX_MAX_VOLUME / 16));
 
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 	{

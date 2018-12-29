@@ -1,4 +1,5 @@
 #include "PhysVehicle3D.h"
+#include "ModulePlayer.h"
 #include "Primitive.h"
 #include "Bullet/include/btBulletDynamicsCommon.h"
 
@@ -66,6 +67,8 @@ void PhysVehicle3D::Render()
 	btVector3 rloffset(info.rlight_offset.x, info.rlight_offset.y, info.rlight_offset.z);
 	rloffset = rloffset.rotate(q3.getAxis(), q3.getAngle());
 	
+	
+	
 
 	chassis.transform.M[12] += offset.getX();
 	chassis.transform.M[13] += offset.getY();
@@ -88,6 +91,7 @@ void PhysVehicle3D::Render()
 	top.Render();
 	llight.Render();
 	rlight.Render();
+	
 }
 
 // ----------------------------------------------------------------------------

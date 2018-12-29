@@ -26,7 +26,6 @@ public:
 	//vec3 btVector3_to_vec3(btVector3 vector); not working for unknown reason
 
 public:
-
 	PhysVehicle3D* vehicle;
 	float z = 0;
 	float turn;

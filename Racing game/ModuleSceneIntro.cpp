@@ -174,6 +174,7 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 	}
 	else if (body1 == Sfinish)
 	{
+		App->audio->PlayFx(4);
 		App->player->Player_reset();
 		last_lap_time = (float)lap_timer.Read() / 1000;
 		if (best_lap_time == 0 || last_lap_time < best_lap_time)

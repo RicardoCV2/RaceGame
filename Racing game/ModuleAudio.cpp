@@ -41,10 +41,12 @@ bool ModuleAudio::Init()
 		ret = true;
 	}
 
-	
+	Mix_VolumeMusic(MIX_MAX_VOLUME/3);
+
 	LoadFx("Audio/Starting.wav");
 	LoadFx("Audio/Motor.wav");
 	LoadFx("Audio/Breaks.wav");
+	LoadFx("Audio/win.wav");
 
 	return ret;
 }
@@ -124,13 +126,37 @@ bool ModuleAudio::PlayMusic(const char* path, float fade_time)
 	return ret;
 }
 
+
+//set the volume of the game
+void ModuleAudio::SetVolume(float volume)
+{
+
+	/*final_volume = MIX_MAX_VOLUME*volume;
+	if (final_volume < 0.0f || final_volume > MIX_MAX_VOLUME)
+		final_volume = (final_volume < 0.0f) ? 0.0f : MIX_MAX_VOLUME;*/
+	if (final_volume >= 0 && final_volume <= 128)
+		final_volume += volume;
+	
+	else
+	{
+		if (final_volume <= 0)
+			final_volume = 0;
+		else
+			final_volume = 128;
+	}
+
+	Mix_VolumeMusic(final_volume);
+	
+}
+
+
 // Load WAV
 unsigned int ModuleAudio::LoadFx(const char* path)
 {
 	unsigned int ret = 0;
 
 	Mix_Chunk* chunk = Mix_LoadWAV(path);
-
+	Mix_VolumeChunk(chunk, 64);
 	if(chunk == NULL)
 	{
 		LOG("Cannot load wav %s. Mix_GetError(): %s", path, Mix_GetError());
@@ -143,6 +169,29 @@ unsigned int ModuleAudio::LoadFx(const char* path)
 
 	return ret;
 }
+
+
+// Set FX volume
+void ModuleAudio::SetFxVolume(float volume)
+{
+	if (final_fx_volume >= 0 && final_fx_volume <= 128)
+		final_fx_volume += volume;
+
+	else
+	{
+		if (final_fx_volume <= 0)
+			final_fx_volume = 0;
+		else
+			final_fx_volume = 128;
+	}
+
+
+	for (p2List_item<Mix_Chunk*>*item_fx = fx.getFirst(); item_fx; item_fx = item_fx->next)
+	{
+		Mix_VolumeChunk(item_fx->data, final_fx_volume);
+	}
+}
+
 
 // Play WAV
 bool ModuleAudio::PlayFx(unsigned int id, int repeat, int channel)
