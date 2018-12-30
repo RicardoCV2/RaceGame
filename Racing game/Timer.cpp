@@ -20,11 +20,7 @@ void Timer::Start()
 }
 
 // ---------------------------------------------
-void Timer::Stop()
-{
-	running = false;
-	stopped_at = SDL_GetTicks();
-}
+
 
 // ---------------------------------------------
 void Timer::Reset()

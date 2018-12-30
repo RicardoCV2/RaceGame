@@ -12,11 +12,8 @@ public:
 	Timer();
 
 	void Start();
-	void Stop();
 	void Reset();
-
 	Uint32 Read();
-	float ReadSec();
 
 private:
 
