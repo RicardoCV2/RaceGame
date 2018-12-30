@@ -22,7 +22,7 @@ bool ModuleSceneIntro::Start()
 	startcube.size = vec3(20, 10, 2);
 	startcube.SetPos(0, 10, 8);
 	finishcube.size = vec3(20, 10, 2);
-	finishcube.SetPos(-40, -30, 665);
+	finishcube.SetPos(-37, -30, 740);
 
 	Sstart = App->physics->AddBody(startcube, 0.0f);
 	Sstart->SetAsSensor(true);
@@ -48,7 +48,7 @@ bool ModuleSceneIntro::Start()
 	SpeedwayPieceDef piece5(vec3(10, 5, 100), vec3(-37, -10, 300), 10, vec3(1,0,0)); //Road
 	speedway_pieces_def.add(piece5);
 
-	SpeedwayPieceDef piece6(vec3(20, 5, 300), vec3(-37, -40, 530)); //Road
+	SpeedwayPieceDef piece6(vec3(20, 5, 430), vec3(-37, -40, 530)); //Road
 	speedway_pieces_def.add(piece6);
 
 	SpeedwayPieceDef piece7(vec3(10, 20, 20), vec3(-30, -40, 430)); //Obstacle
@@ -66,6 +66,29 @@ bool ModuleSceneIntro::Start()
 	SpeedwayPieceDef piece11(vec3(10, 20, 20), vec3(-35, -40, 580)); //Obstacle
 	speedway_pieces_def.add(piece11);
 
+	SpeedwayPieceDef piece12(vec3(75, 5, 20), vec3(5, -40, 610)); //Road
+	speedway_pieces_def.add(piece12);
+
+	SpeedwayPieceDef piece13(vec3(75, 5, 20), vec3(30, -40, 610), 30, vec3(0, 0, 1)); //Road
+	speedway_pieces_def.add(piece13);
+
+	SpeedwayPieceDef piece14(vec3(35, 5, 75), vec3(120, -40, 640)); //Road
+	speedway_pieces_def.add(piece14);
+
+	SpeedwayPieceDef piece15(vec3(75, 5, 20), vec3(60, -40, 650), -10, vec3(0, 0, 1)); //Road
+	speedway_pieces_def.add(piece15);
+
+	SpeedwayPieceDef piece16(vec3(35, 5, 20), vec3(-20, -40, 650), -30, vec3(0, 1, 0)); //Road
+	speedway_pieces_def.add(piece16);
+
+	SpeedwayPieceDef piece17(vec3(25, 40, 10), vec3(-35, -20, 625)); //Obstacle
+	speedway_pieces_def.add(piece17);
+
+	SpeedwayPieceDef piece18(vec3(10, 20, 20), vec3(-35, -40, 670)); //Obstacle
+	speedway_pieces_def.add(piece18);
+
+
+	
 	for (int i = 0; i < speedway_pieces_def.count(); i++)
 	{
 		Cube c;
